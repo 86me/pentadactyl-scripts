@@ -5,7 +5,8 @@ Plugins, Colorschemes and other stuff that I've written for usage with
 Firefox's [Pentadactyl](http://dactyl.sourceforge.net/pentadactyl) extension.
 
 :Last Modified: 04/23/2011
-:Current Maintainer: Egon Hyszczak
+:Maintainer: Egon Hyszczak
+
 
 New Features
     - Pentadactyl support
