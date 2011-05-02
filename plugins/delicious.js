@@ -56,8 +56,8 @@ group.commands.add(['delicious'], "Save page as a bookmark on Delicious",
             if(ext) {
                 url += "&share_msg=" + extended;
             } else {
-                if(title.length >= 110) {
-                    title = title.substr(0,110).trim();
+                if(title.length >= 137) {
+                    title = title.substr(0,137).trim();
                     title += "...";
                     url += "&share_msg=" + encodeURIComponent(title);
                 } else {
@@ -67,17 +67,20 @@ group.commands.add(['delicious'], "Save page as a bookmark on Delicious",
             url += "&recipients=" + encodeURIComponent("@twitter");
         }
 
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", url, false);
-        xhr.send(null);
-        var xml = (new DOMParser()).parseFromString(xhr.responseText, "text/xml");
-        var status = xml.getElementsByTagName('result')[0].getAttribute('code');
+        util.httpGet(url, {
+          method: "POST",
+          onload: function(req) {
+            var status = req.responseXML.getElementsByTagName('result')[0].getAttribute('code');
 
-        if(status == "done") {
-            statusString += "Added bookmark for " + buffer.URL + " [" + tags + "]";
-            dactyl.echo(statusString);
-        } else {
-            dactyl.echo(status);
-        }
+            if(status == "done") {
+              statusString += "Added bookmark for " + buffer.URL + " [" + tags + "]";
+              dactyl.echomsg(statusString);
+            } else {
+              dactyl.echomsg(status);
+            }
+          },
+          user: 'changeme', //Username
+          pass: 'changeme' //Password
+        });
     }
 );
